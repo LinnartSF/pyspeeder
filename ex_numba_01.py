@@ -20,7 +20,7 @@ print(str(_end_time - _start_time))
 """ RUNTIME TEST WITH NUMBA ------------------------------ """
 
 _start_time = time.time()
-jit_get_heads = jit()(get_heads)
+jit_get_heads = jit(nopython=True)(get_heads)
 vals = jit_get_heads(10000000)
 _end_time = time.time()
 

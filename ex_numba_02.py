@@ -25,7 +25,7 @@ print(str(_end_time - _start_time))
 """ RUNTIME TEST WITH NUMBA ------------------------------ """
 
 _start_time = time.time()
-jit_rand_events = jit()(rand_events)
+jit_rand_events = jit(nopython=True)(rand_events)
 vals = jit_rand_events(10000000)
 _end_time = time.time()
 
