@@ -25,3 +25,9 @@ vals = jit_get_heads(10000000)
 _end_time = time.time()
 
 print(str(_end_time-_start_time))
+
+_start_time = time.time()
+vals = jit_get_heads(10000000)
+_end_time = time.time()
+
+print(str(_end_time-_start_time))
