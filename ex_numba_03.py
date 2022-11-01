@@ -5,7 +5,7 @@ from numba import jit
 import random
 import time
 
-def rand_events(n: int) -> list:
+def rand_events(n: int) -> np.ndarray:
     ls = np.zeros(n)
     for i in range(n):
         x = random.random()
