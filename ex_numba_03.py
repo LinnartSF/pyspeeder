@@ -1,6 +1,6 @@
 import numpy as np
 
-from numba import jit
+from numba import jit, njit, vectorize
 
 import random
 import time
