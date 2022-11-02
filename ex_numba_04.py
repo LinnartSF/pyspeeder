@@ -55,7 +55,7 @@ def get_neighbourhood(row: int, col: int, radius: int, grid: list) -> list:
             elif grid[i-1][j-1]:
                 returnls.append(grid[i-1][j-1])
 
-    returnls
+    return returnls
 
 starttime = time.time()
 neighbours = get_neighbourhood(5,5,3,grid_agent)
