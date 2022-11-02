@@ -1,6 +1,6 @@
 import numpy as np
 
-from numba import njit
+from numba import jit, njit
 
 import random
 import time
@@ -42,6 +42,8 @@ def search_neighbourhood(row: int, col: int, radius: int, grid: list, iterations
     col_min = col-radius
     col_max = col+radius
 
+    returnls = []
+
     for _ in range(iterations): # adding iterations just to consume more time to see impact of numba later
 
         returnls = []
@@ -57,11 +59,52 @@ def search_neighbourhood(row: int, col: int, radius: int, grid: list, iterations
                     pass
                 elif grid[i-1][j-1]:
                     returnls.append(grid[i-1][j-1])
+    
+    # return last list of references
+    return returnls
 
 
 starttime = time.time()
-neighbours = get_neighbourhood(5,5,20,grid_agent)
+returnls = search_neighbourhood(50,50,20,grid_agent,100000)
 endtime = time.time()
-print("neighbours: ")
-print(neighbours)
+#print("neighbours: "+str(returnls))
 print("time consumed: "+str(endtime-starttime))
+
+# --- NEIGHBOURHOOD SEARCH WITH NUMBA ----------------------
+
+@njit
+def search_neighbourhood_jitted(row: int, col: int, radius: int, grid: list, iterations: int) -> None:
+
+    row_min = row-radius
+    row_max = row+radius
+    col_min = col-radius
+    col_max = col+radius
+
+    returnls = np.zeros(100,100)
+
+    for _ in range(iterations): # adding iterations just to consume more time to see impact of numba later
+
+        returnls = np.zeros(100,100)
+
+        if row_min < 1: row_min = 1
+        if row_max > 100: row_max = 100
+        if col_min < 1: col_min = 1
+        if col_max > 100: col_max = 100
+
+        for i in range(row_min,row_max+1):
+            for j in range(col_min,col_max+1):
+                if i == row and col == col:
+                    pass
+                elif grid[i-1][j-1] > 0:
+                    returnls[i,j] = grid[i-1][j-1]
+    
+    # return last list of references
+    return returnls[:1]
+
+starttime = time.time()
+returnls = search_neighbourhood_jitted(50,50,20,grid_id,100000)
+endtime = time.time()
+#print("neighbours: "+str(returnls))
+print("time consumed: "+str(endtime-starttime))
+
+
