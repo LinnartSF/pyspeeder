@@ -72,7 +72,7 @@ print("time consumed: "+str(endtime-starttime))
 
 # --- NEIGHBOURHOOD SEARCH WITH NUMBA ----------------------
 
-@njit
+@jit
 def search_neighbourhood_jitted(row: int, col: int, radius: int, grid: list, iterations: int) -> None:
 
     row_min = row-radius
